@@ -35,10 +35,34 @@ def play_game():
             print("\nInvalid input. Please enter a number.\n")
 
     # Display the total number of guesses
+    total_guesses = high + low + win
+
     print()
     print("Number of times too high:", high)
     print("Number of times too low:", low)
-    print("Total number of guesses:", high + low + win)
+    print("Total number of guesses:", total_guesses)
+
+    # Update the high score
+    update_hiscore(total_guesses)
+
+    # Writes and Displays the New Hiscore in "hiscore.txt"
+
+def update_hiscore(score):
+    try:
+        # Read the existing high score
+        with open("hiscore.txt", "r") as f:
+            hiscore = int(f.read())
+
+    except (FileNotFoundError, ValueError):
+        # If file doesn't exist or is empty
+        hiscore = None
+
+    if hiscore is None or score < hiscore:
+        with open("hiscore.txt", "w") as f:
+            f.write(str(score))
+        print("🎉 New High Score:", score, "guesses!")
+    else:
+        print("🏆 High Score:", hiscore, "guesses")
 
 
 # -------- Play Again Feature --------
